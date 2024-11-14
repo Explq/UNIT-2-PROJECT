@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Website</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>My Personal Website</h1>
+        </div>
+        <div class="header-right">
+            <div class="search-bar">
+                <form method="get" action="{% url 'home' %}">
+                    {% csrf_token %}
+                    <input type="text" name="query" placeholder="Search..." value="{{ request.GET.query }}">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <div class="dashboard-icon">
+                <img src="{% static 'images/dashboard_icon.png' %}" alt="Dashboard" id="dashboard-icon">
+            </div>
+        </div>
+    </header>
+    <div id="dashboard-sidebar" class="dashboard-sidebar">
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'projects' %}">My Projects</a></li>
+                <li><a href="{% url 'about_me' %}">About Me</a></li>
+                <li><a href="{% url 'contact' %}">Contact Me</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div id="main-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script>
+
+        document.getElementById("dashboard-icon").addEventListener("click", function() {
+            const sidebar = document.getElementById("dashboard-sidebar");
+            sidebar.classList.toggle("visible");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <h2>Hey, i'm Mohammmed Alkathiri</h2>
+
+    {% if results %}
+        <h3>Search Results:</h3>
+        {% if results.projects %}
+            <h4>Projects:</h4>
+            <ul>
+                {% for project in results.projects %}
+                    <li><a href="{% url 'projects' %}">{{ project.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No projects found matching "{{ request.GET.query }}"</p>
+        {% endif %}
+        {% if results.about_me %}
+            <h4>About Me:</h4>
+            <ul>
+                {% for about in results.about_me %}
+                    <li><a href="{% url 'about_me' %}">{{ about.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No results found for About Me matching "{{ request.GET.query }}"</p>
+        {% endif %}
+
+    {% else %}
+        <p>Search for projects or about me by typing in the search box above.</p>
+    {% endif %}
+{% endblock %}
