@@ -1,10 +1,18 @@
 {% extends 'main/base.html' %}
+{% load static %}
+
+{% block body_class %}home-page{% endblock %}
+
+{% block background_image %}
+    {% static 'images/home-bg.jpg' %}
+{% endblock %}
 
 {% block content %}
-    <h2>Hey, i'm Mohammmed Alkathiri</h2>
+    <h2>Hey, I'm Mohammed Alkathiri</h2>
 
-    {% if results %}
-        <h3>Search Results:</h3>
+    {% if request.GET.query %}
+        <h3>Search Results for "{{ request.GET.query }}":</h3>
+
         {% if results.projects %}
             <h4>Projects:</h4>
             <ul>
@@ -13,8 +21,9 @@
                 {% endfor %}
             </ul>
         {% else %}
-            <p>No projects found matching "{{ request.GET.query }}"</p>
+            <p>No projects found matching "{{ request.GET.query }}".</p>
         {% endif %}
+
         {% if results.about_me %}
             <h4>About Me:</h4>
             <ul>
@@ -23,10 +32,14 @@
                 {% endfor %}
             </ul>
         {% else %}
-            <p>No results found for About Me matching "{{ request.GET.query }}"</p>
+            <p>No results found for About Me matching "{{ request.GET.query }}".</p>
+        {% endif %}
+
+        {% if message %}
+            <p>{{ message }}</p>
         {% endif %}
 
     {% else %}
-        <p>Search for projects or about me by typing in the search box above.</p>
+        <p>Search for projects or About Me by typing in the search box above.</p>
     {% endif %}
 {% endblock %}

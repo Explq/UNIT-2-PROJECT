@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block body_class %}search-page{% endblock %}
+
+{% block content %}
+    <h2>Search Results for "{{ request.GET.query }}":</h2>
+
+    {% if results.projects %}
+        <h4>Projects:</h4>
+        <ul>
+            {% for project in results.projects %}
+                <li><a href="{% url 'projects' %}">{{ project.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No projects found matching "{{ request.GET.query }}".</p>
+    {% endif %}
+
+    {% if results.about_me %}
+        <h4>About Me:</h4>
+        <ul>
+            {% for about in results.about_me %}
+                <li><a href="{% url 'about_me' %}">{{ about.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found for About Me matching "{{ request.GET.query }}".</p>
+    {% endif %}
+{% endblock %}

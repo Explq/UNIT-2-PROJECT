@@ -1,16 +1,31 @@
 {% extends 'main/base.html' %}
-{% block content %}
-    <h1>Dashboard</h1>
-    <div class="dashboard-items">
-        {% for item in items %}
-            <div class="dashboard-item">
-                <h2>{{ item.title }}</h2>
-                <p>{{ item.description }}</p>
-                <p><small>Created at: {{ item.created_at }}</small></p>
-            </div>
-        {% empty %}
-            <p>No dashboard items available.</p>
-        {% endfor %}
-    </div>
 
+{% block content %}
+    <h1>Welcome to the Dashboard!</h1>
+
+    <h2>Contact Messages</h2>
+    {% if contact_messages %}
+        <ul>
+            {% for message in contact_messages %}
+                <li><strong>{{ message.name }} ({{ message.email }}):</strong> {{ message.message }} - <small>{{ message.created_at }}</small></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No contact messages yet.</p>
+    {% endif %}
+
+    <h2>Projects</h2>
+                <a href="{% url 'add_project' %}" class="add-project-link">Add New Project</a>
+
+    {% if projects %}
+        <ul>
+            {% for project in projects %}
+                <li><strong>{{ project.title }}</strong>: {{ project.description }}</li>
+                <a href="{% url 'update_project' project.pk %}">Update</a> |
+                <a href="{% url 'delete_project' project.pk %}">Delete</a>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No projects available.</p>
+    {% endif %}
 {% endblock %}

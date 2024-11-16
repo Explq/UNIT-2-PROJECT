@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SearchForm
-from .models import Project, AboutMe
+from .forms import SearchForm, ContactForm
+from .models import Project, AboutMe, ContactMessage
 from django.contrib import messages
 from .forms import ProjectForm
 
@@ -27,11 +27,15 @@ def projects(request):
 
 def contact(request):
     if request.method == 'POST':
-        messages.success(request, 'Your message has been sent successfully!')
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your message has been sent successfully!')
+            return redirect('contact')
+    else:
+        form = ContactForm()
 
-        return render(request, 'main/contact.html')
-    return render(request, 'main/contact.html')
-
+    return render(request, 'main/contact.html', {'form': form})
 def add_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
@@ -63,3 +67,45 @@ def delete_project(request, pk):
         messages.success(request, 'Project deleted successfully!')
         return redirect('projects')
     return render(request, 'main/delete_project.html', {'project': project})
+
+from django.shortcuts import render, redirect
+from .forms import SearchForm
+
+
+
+from django.shortcuts import render, redirect
+from .forms import SearchForm
+from .models import Project, AboutMe
+
+
+
+def search_view(request):
+    form = SearchForm(request.GET)
+    results = {
+        'projects': [],
+        'about_me': [],
+    }
+    message = None
+
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        page_mapping = {
+            'home': 'home',
+            'contact': 'contact',
+            'projects': 'projects',
+            'about me': 'about_me',
+        }
+
+        if query.lower() in page_mapping:
+            return redirect(page_mapping[query.lower()])
+
+        results['projects'] = Project.objects.filter(title__icontains=query)
+        results['about_me'] = AboutMe.objects.filter(name__icontains=query)
+
+        if not results['projects'] and not results['about_me']:
+            message = f'No results found for "{query}".'
+
+    if message:
+        return render(request, 'main/home.html', {'form': form, 'message': message, 'results': results})
+
+    return render(request, 'main/home.html', {'form': form, 'results': results})

@@ -2,18 +2,32 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    text-align:center;
+
+}
+.about-me-cont p {
+    padding-left: 300px;
+    padding-right: 300px;
 }
 
 header {
     background-color: #333;
     color: white;
-    padding: 10px;
+    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+}
+
+header .header-left {
+    display: flex;
+    align-items: center;
+}
+
+header .header-left .dashboard-icon {
+    margin-right: 10px;
 }
 
 header .header-left h1 {
@@ -28,7 +42,6 @@ header .header-right {
 .search-bar form {
     display: flex;
     align-items: center;
-    margin-right: 20px;
 }
 
 .search-bar input[type="text"] {
@@ -58,6 +71,10 @@ header .header-right {
     cursor: pointer;
 }
 
+#main-content {
+    padding: 20px;
+}
+
 .dashboard-sidebar {
     position: fixed;
     top: 0;
@@ -76,36 +93,61 @@ header .header-right {
 }
 
 .dashboard-sidebar nav ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .dashboard-sidebar nav ul li {
-    padding: 5px;
+    padding: 15px;
 }
 
 .dashboard-sidebar nav ul li a {
     color: white;
     text-decoration: none;
     display: block;
-    padding: 10px;
 }
 
 .dashboard-sidebar nav ul li a:hover {
     background-color: #444;
 }
 
-#main-content {
-    padding: 20px;
-    margin-left: 270px;
-    transition: margin-left 0.3s ease;
-}
-
 .dashboard-sidebar.visible ~ #main-content {
-    margin-left: 0;
+    margin-left: 250px;
+}
+.project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+
 }
 
-.about-me-cont p {
-    text-align: left;
-    display: flex;
+.project-image {
+    max-width: 30%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
 }
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1rem;
+    color: white;
+    padding-left: 120px;
+    padding-right: 120px;
+}
+.add-project-link {
+    background-color: black;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;

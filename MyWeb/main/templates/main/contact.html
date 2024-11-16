@@ -1,17 +1,15 @@
 {% extends 'main/base.html' %}
+{% load static %}
+
+{% block contact-bg.jpg %}
+    {% static 'images/contact-bg.jpg' %}
+{% endblock %}
 
 {% block content %}
     <div class="contact-form-container">
         <h2>Contact Me</h2>
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li class="message {% if message.tags %}{{ message.tags }}{% endif %}">
-                        {{ message }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+
+
         <form method="POST" action="{% url 'contact' %}">
             {% csrf_token %}
             <div class="form-group">
