@@ -68,15 +68,6 @@ def delete_project(request, pk):
         return redirect('projects')
     return render(request, 'main/delete_project.html', {'project': project})
 
-from django.shortcuts import render, redirect
-from .forms import SearchForm
-
-
-
-from django.shortcuts import render, redirect
-from .forms import SearchForm
-from .models import Project, AboutMe
-
 
 
 def search_view(request):
